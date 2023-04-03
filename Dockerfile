@@ -14,6 +14,8 @@ RUN dotnet restore
 COPY src src
 RUN dotnet build -c Release 
 
+RUN dotnet test
+
 # --------------- Publish apps in dedicated stages for parallelism ---------------
 
 FROM solution AS webapp-publish
