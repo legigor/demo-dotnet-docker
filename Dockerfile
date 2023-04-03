@@ -33,11 +33,11 @@ RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN apt-get update && \
     apt-get install -y libgdiplus && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
 # --------------- FINAL: WebApp ---------------
 
 FROM runtime as webapp
-WORKDIR /app
 COPY --from=webapp-publish /app/Demo.WebApp .
 ENTRYPOINT [ "dotnet", "Demo.WebApp.dll" ]
 
@@ -49,7 +49,6 @@ FROM runtime as runner
 COPY --from=worker-publish /app/Demo.Worker /worker
 
 # The main app
-WORKDIR /app
 COPY --from=runner-publish /app/Demo.Runner .
 
 
