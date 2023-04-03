@@ -29,6 +29,10 @@ RUN dotnet publish src/Demo.Worker/Demo.Worker.csproj -c Release --no-restore --
 FROM mcr.microsoft.com/dotnet/aspnet:7.0.3 as runtime
 # https://stackoverflow.com/questions/60003204/net-3-1-application-running-inside-docker-is-failing-to-connect-sql-server
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+# Required for ImageSharp
+RUN apt-get update && \
+    apt-get install -y libgdiplus && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # --------------- FINAL: WebApp ---------------
 
