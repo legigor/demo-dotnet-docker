@@ -17,15 +17,12 @@ RUN dotnet build -c Release
 # --------------- Publish apps in dedicated stages for parallelism ---------------
 
 FROM solution AS webapp-publish
-RUN ls -lahi
 RUN dotnet publish src/Demo.WebApp/Demo.WebApp.csproj -c Release --no-restore --no-build -o /app/Demo.WebApp 
 
 FROM solution AS runner-publish
-RUN ls -lahi
 RUN dotnet publish src/Demo.Runner/Demo.Runner.csproj -c Release --no-restore --no-build -o /app/Demo.Runner
 
 FROM solution AS worker-publish
-RUN ls -lahi
 RUN dotnet publish src/Demo.Worker/Demo.Worker.csproj -c Release --no-restore --no-build -o /app/Demo.Worker
 
 # --------------- Just a base runime image ---------------
