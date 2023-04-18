@@ -2,15 +2,18 @@ version: '3.7'
 
 services:
   webapp:    
-    image: myregistry.co.uk/demo/webapp:1.0.0
+    image: myregistry.co.uk/demo/webapp:${VERSION}
     build: 
       context: .
       target: webapp
     ports:
       - "8080:80"
+    environment:
+      DEMO_Environment=prod
+      DEMO_Version=${VERSION}
 
   runner:
-    image: myregistry.co.uk/demo/runner:1.0.0
+    image: myregistry.co.uk/demo/runner:${VERSION}
     build: 
       context: .
       target: runner
